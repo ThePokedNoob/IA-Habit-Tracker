@@ -2,16 +2,15 @@ from tkinter import *
 from top_menu import create_top_menu
 from file_manager import *
 
-# Create the main window
 root = Tk()
 root.title("Habit Tree")
+root.geometry('400x600')
 
-# Set up the top menu from our external module
-create_top_menu(root)
+# Create the content frame before setting up the top menu
+content_frame = Frame(root)
+content_frame.pack(pady=50)
 
-# Create a canvas widget
-canvas = Canvas(root, width=400, height=300, bg='white')
-canvas.pack()
+# Pass the content frame to the menu creation function
+create_top_menu(root, content_frame)
 
-# Start the main event loop
 root.mainloop()

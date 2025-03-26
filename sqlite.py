@@ -3,7 +3,7 @@ from file_manager import *
 from main_content import *
 import os
 
-def createDatabase(root):
+def createDatabase(content_frame):
 
     # Open save dialog to choose database path
     db_path = asksaveasfilename(
@@ -53,13 +53,13 @@ def createDatabase(root):
             sqliteConnection.close()
     
     # Show main page after creation
-    show_main_page(root)
+    show_main_page(content_frame, db_path)
 
-def importDatabase(root):
+def importDatabase(content_frame):
     filename = askForDatabase()
     if filename:
         # Add your import logic here
         print(f"Database imported from: {filename}")
 
         # Show main page after import
-        show_main_page(root)
+        show_main_page(content_frame, filename)
