@@ -1,0 +1,65 @@
+import sqlite3
+from file_manager import *
+from main_content import *
+import os
+
+def createDatabase(root):
+
+    # Open save dialog to choose database path
+    db_path = asksaveasfilename(
+        defaultextension='.db',
+        filetypes=[('Database files', '*.db'), ('All files', '*.*')],
+        title='Save Database As',
+        initialfile='habit_tree_save_file.db'
+    )
+    
+    # Exit if user canceled the dialog
+    if not db_path:
+        return
+    
+    # Delete existing file if it exists (after user confirmed overwrite)
+    if os.path.exists(db_path):
+        try:
+            os.remove(db_path)
+        except Exception as e:
+            print(f"Error removing existing file: {e}")
+            return
+    
+    try:
+        # Connect to the new database
+        sqliteConnection = sqlite3.connect(db_path)
+        cursor = sqliteConnection.cursor()
+        
+        # Create fresh table
+        cursor.execute('''CREATE TABLE tree(
+            NAME TEXT,
+            LEVEL INTEGER,
+            WATER INTEGER,
+            WATER_NEEDED_FOR_NEXT_LEVEL INTEGER);''')
+        
+        # Insert initial data with correct syntax
+        cursor.execute('''INSERT INTO tree VALUES (
+            'My Tree',
+            1,
+            0,
+            50)''')
+        
+        sqliteConnection.commit()
+        
+    except sqlite3.Error as e:
+        print(f"Database error: {e}")
+    finally:
+        if sqliteConnection:
+            sqliteConnection.close()
+    
+    # Show main page after creation
+    show_main_page(root)
+
+def importDatabase(root):
+    filename = askForDatabase()
+    if filename:
+        # Add your import logic here
+        print(f"Database imported from: {filename}")
+
+        # Show main page after import
+        show_main_page(root)
