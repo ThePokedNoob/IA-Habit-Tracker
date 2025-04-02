@@ -30,12 +30,19 @@ def createDatabase(content_frame):
         sqliteConnection = sqlite3.connect(db_path)
         cursor = sqliteConnection.cursor()
         
-        # Create fresh table
+        # Create table with the current tree
         cursor.execute('''CREATE TABLE tree(
-            NAME TEXT,
+            TREE_NAME TEXT,
             LEVEL INTEGER,
             WATER INTEGER,
             WATER_NEEDED_FOR_NEXT_LEVEL INTEGER);''')
+
+        # Create table with the current habits
+        cursor.execute('''CREATE TABLE habits(
+            HABIT_NAME TEXT,
+            DESCRIPTION TEXT,
+            TYPE INTEGER,
+            PRIORITY INTEGER);''')
         
         # Insert initial data with correct syntax
         cursor.execute('''INSERT INTO tree VALUES (

@@ -12,7 +12,7 @@ def show_main_page(content_frame, db_path):
     with sqlite3.connect(db_path) as conn:
         cursor = conn.cursor()
         query = """
-            SELECT NAME, LEVEL, WATER, WATER_NEEDED_FOR_NEXT_LEVEL
+            SELECT TREE_NAME, LEVEL, WATER, WATER_NEEDED_FOR_NEXT_LEVEL
             FROM tree
             WHERE rowid = 1;
         """
